@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Результаты поиска{% endblock %}
+{% block content %}
+
+<div class="container py-5">
+  <h2>Результаты поиска</h2>
+  {% if query %}
+  <p>Для запроса "{{ query }}" найдено постов: {{ object_list.count }} </p>
+  {% else %}
+  <p>Пожалуйста, введите запрос.</p>
+  {% endif %}
+  <ul>
+    {% for post in object_list %}
+      <li>
+        <a href="{% url 'posts:post_detail' post.pk %}">
+          {{ post.text|truncatechars_html:50 }}
+        </a>
+      </li>
+    {% empty %}
+      <li>Ничего не найдено.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

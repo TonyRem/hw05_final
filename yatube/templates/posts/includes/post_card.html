@@ -1,0 +1,36 @@
+{% load thumbnail %}
+<div>
+  {% if post.author == request.user %}
+  <div>
+    <a href="{% url 'posts:post_edit' post_id=post.id %}"
+      class="btn btn-outline-secondary btn-sm">
+        <i class="fas fa-pencil-alt"></i> 
+        Редактировать
+    </a>
+  </div>
+  {% endif %}
+  <ul>
+    {% if post.group %}
+    <li>
+      Группа: {{ post.group }}
+      <a href="{% url 'posts:group_list' post.group.slug %}">
+        все записи группы
+      </a>
+    </li>
+    {% endif %}
+    <li>
+      Автор: {{ post.author.get_full_name }}
+      <a href="{% url 'posts:profile' username=post.author.username %}">
+        все посты пользователя
+      </a>
+    </li>
+    <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
+  </ul>
+  {% thumbnail post.image "900x339" crop="center" upscale=True as im %}
+    <img class="card-img my-2" src="{{ im.url }}">
+  {% endthumbnail %}
+  <p>{{ post.text }}</p>
+  <a href="{% url 'posts:post_detail' post_id=post.id %}">
+    Подробная информация
+  </a>
+</div>
