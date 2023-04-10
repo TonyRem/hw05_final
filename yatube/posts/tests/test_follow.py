@@ -1,7 +1,5 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth import get_user_model
-from django.core.paginator import Page
 from django.core.cache import cache
 from django.test import TestCase, Client
 from django.urls import reverse
@@ -33,7 +31,7 @@ class FollowTests(TestCase):
                     'username': self.another_user.username})
         )
 
-        # Проверяем, что пользователь успешно подписался на другого пользователя
+        # Проверяем, что пользователь успешно подписался
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Follow.objects.filter(
             user=self.user, author=self.another_user).exists())

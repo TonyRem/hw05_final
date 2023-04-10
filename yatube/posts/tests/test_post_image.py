@@ -25,8 +25,10 @@ class TaskViewTests(TestCase):
     def test_post_image_context(self):
         """Проверяет наличие переданной картинки на всех страницах с постом"""
         # Post detail page
-        response = self.authorized_client.get(reverse(viewname='posts:post_detail',
-                                                      args=[self.post.id]))
+        response = self.authorized_client.get(
+            reverse(viewname='posts:post_detail',
+                    args=[self.post.id])
+        )
         actual_image = response.context['post'].image
         expected_image = self.post.image
 
@@ -47,8 +49,10 @@ class TaskViewTests(TestCase):
         self.assertEqual(image_content, expected_image_content)
 
         # Profile page posts
-        response = self.authorized_client.get(reverse(viewname='posts:profile',
-                                                      args=[self.author.username]))
+        response = self.authorized_client.get(
+            reverse(viewname='posts:profile',
+                    args=[self.author.username])
+        )
         post_image = response.context['page_obj'][0].image
         image_content = post_image.read()
 
@@ -57,8 +61,10 @@ class TaskViewTests(TestCase):
         self.assertEqual(image_content, expected_image_content)
 
         # Group page posts
-        response = self.authorized_client.get(reverse(viewname='posts:group_list',
-                                                      args=[self.group.slug]))
+        response = self.authorized_client.get(
+            reverse(viewname='posts:group_list',
+                    args=[self.group.slug])
+        )
         post_image = response.context['page_obj'][0].image
         image_content = post_image.read()
 
